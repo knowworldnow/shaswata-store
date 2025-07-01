@@ -445,6 +445,20 @@
                 <div class="card-description">View, edit, and delete existing products in your store</div>
                 <button class="card-action" onclick="showProductsList()">View Products</button>
             </div>
+            
+            <div class="admin-card">
+                <div class="card-icon">🧪</div>
+                <div class="card-title">Test API</div>
+                <div class="card-description">Test if the backend APIs are working correctly</div>
+                <button class="card-action" onclick="testAPI()">Test APIs</button>
+            </div>
+            
+            <div class="admin-card">
+                <div class="card-icon">🔍</div>
+                <div class="card-title">Debug Tool</div>
+                <div class="card-description">Advanced debugging and API testing interface</div>
+                <button class="card-action" onclick="window.open('/debug.html', '_blank')">Open Debug Tool</button>
+            </div>
         </div>
 
         <!-- Success/Error Messages -->
@@ -562,16 +576,37 @@
         let allProducts = [];
 
         // Initialize admin panel
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Admin panel loading...');
+            
+            // Test API connection
+            try {
+                console.log('Testing API connection...');
+                const testResponse = await fetch('/api/products');
+                console.log('API test response status:', testResponse.status);
+                
+                if (testResponse.ok) {
+                    const data = await testResponse.json();
+                    console.log('API working! Found', data.products?.length || 0, 'products');
+                } else {
+                    console.warn('API returned error:', testResponse.status);
+                }
+            } catch (error) {
+                console.error('API test failed:', error);
+            }
+            
             updateCartCount();
-            loadDashboardStats();
+            await loadDashboardStats();
             setupEventListeners();
+            
+            console.log('Admin panel initialized');
         });
 
         function setupEventListeners() {
             // Icon selection
             document.querySelectorAll('.icon-option').forEach(option => {
                 option.addEventListener('click', function() {
+                    console.log('Icon selected:', this.dataset.icon);
                     document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
                     this.classList.add('selected');
                     document.getElementById('selectedIcon').value = this.dataset.icon;
@@ -579,15 +614,37 @@
             });
 
             // Form submission
-            document.getElementById('productForm').addEventListener('submit', handleFormSubmit);
+            const form = document.getElementById('productForm');
+            if (form) {
+                form.addEventListener('submit', handleFormSubmit);
+                console.log('Form submit listener attached');
+            } else {
+                console.error('Product form not found!');
+            }
 
             // Feature input enter key
-            document.getElementById('featureInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    addFeature();
-                }
-            });
+            const featureInput = document.getElementById('featureInput');
+            if (featureInput) {
+                featureInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addFeature();
+                    }
+                });
+            }
+
+            // Add click handlers for admin cards
+            const addProductCard = document.querySelector('.admin-card button[onclick="showAddProductForm()"]');
+            const manageProductsCard = document.querySelector('.admin-card button[onclick="showProductsList()"]');
+            
+            if (addProductCard) {
+                addProductCard.onclick = showAddProductForm;
+            }
+            if (manageProductsCard) {
+                manageProductsCard.onclick = showProductsList;
+            }
+
+            console.log('All event listeners set up');
         }
 
         function showAddProductForm() {

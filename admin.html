@@ -445,20 +445,6 @@
                 <div class="card-description">View, edit, and delete existing products in your store</div>
                 <button class="card-action" id="manageProductsBtn">View Products</button>
             </div>
-            
-            <div class="admin-card">
-                <div class="card-icon">🧪</div>
-                <div class="card-title">Test API</div>
-                <div class="card-description">Test if the backend APIs are working correctly</div>
-                <button class="card-action" id="testApiBtn">Test APIs</button>
-            </div>
-            
-            <div class="admin-card">
-                <div class="card-icon">🔍</div>
-                <div class="card-title">Debug Tool</div>
-                <div class="card-description">Advanced debugging and API testing interface</div>
-                <button class="card-action" id="debugToolBtn">Open Debug Tool</button>
-            </div>
         </div>
 
         <!-- Success/Error Messages -->
@@ -638,10 +624,6 @@
             if (addProductBtn) addProductBtn.onclick = showAddProductForm;
             const manageProductsBtn = document.getElementById('manageProductsBtn');
             if (manageProductsBtn) manageProductsBtn.onclick = showProductsList;
-            const testApiBtn = document.getElementById('testApiBtn');
-            if (testApiBtn) testApiBtn.onclick = testApiFunction;
-            const debugToolBtn = document.getElementById('debugToolBtn');
-            if (debugToolBtn) debugToolBtn.onclick = debugToolFunction;
 
             console.log('All event listeners set up');
         }
@@ -854,16 +836,6 @@
                 // await apiClient.deleteProduct(id);
                 // loadProducts();
             }
-        }
-
-        // Placeholder for Test API button
-        function testApiFunction() {
-            alert('Test API button clicked! Implement API testing logic here.');
-        }
-
-        // Placeholder for Debug Tool button
-        function debugToolFunction() {
-            alert('Debug Tool button clicked! Implement debug tool logic here.');
         }
     </script>
 </body>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Shaswata's Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .admin-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .admin-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .admin-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .card-action {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .card-action:hover {
+            background: #5a6fd8;
+        }
+
+        .add-product-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .icon-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .icon-option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            font-size: 2rem;
+            transition: all 0.3s;
+        }
+
+        .icon-option:hover {
+            background: #e9ecef;
+        }
+
+        .icon-option.selected {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+
+        .features-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .features-input input {
+            flex: 1;
+        }
+
+        .add-feature-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            background: #e9ecef;
+            color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            margin: 0.2rem;
+            font-size: 0.9rem;
+        }
+
+        .remove-feature {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%;
+            margin-top: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .products-list {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-admin-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .product-admin-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .edit-btn {
+            background: #ffc107;
+            color: #333;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .admin-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .icon-selector {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">🛒 Shaswata's Store</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <div class="cart-icon" onclick="toggleCart()">
+                        🛒 Cart
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>🔧 Admin Dashboard</h1>
+            <p>Manage your store products and view analytics</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalProducts">12</div>
+                <div class="stat-label">Total Products</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCategories">4</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalOrders">0</div>
+                <div class="stat-label">Orders Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalRevenue">$0</div>
+                <div class="stat-label">Revenue Today</div>
+            </div>
+        </div>
+
+        <div class="admin-dashboard">
+            <div class="admin-card">
+                <div class="card-icon">➕</div>
+                <div class="card-title">Add New Product</div>
+                <div class="card-description">Create a new product listing with details, pricing, and images</div>
+                <button class="card-action" onclick="showAddProductForm()">Add Product</button>
+            </div>
+            
+            <div class="admin-card">
+                <div class="card-icon">📦</div>
+                <div class="card-title">Manage Products</div>
+                <div class="card-description">View, edit, and delete existing products in your store</div>
+                <button class="card-action" onclick="showProductsList()">View Products</button>
+            </div>
+        </div>
+
+        <!-- Success/Error Messages -->
+        <div id="successMessage" class="success-message hidden"></div>
+        <div id="errorMessage" class="error-message hidden"></div>
+
+        <!-- Add Product Form -->
+        <div id="addProductForm" class="add-product-form hidden">
+            <h2 class="form-title">Add New Product</h2>
+            <form id="productForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="productName">Product Name *</label>
+                        <input type="text" id="productName" required placeholder="e.g., iPhone 15 Pro">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice">Price ($) *</label>
+                        <input type="number" id="productPrice" step="0.01" min="0" required placeholder="999.99">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productCategory">Category *</label>
+                        <select id="productCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="books">Books</option>
+                            <option value="sports">Sports</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productStock">Stock Quantity *</label>
+                        <input type="number" id="productStock" min="0" required placeholder="50">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="productDescription">Short Description *</label>
+                        <textarea id="productDescription" required placeholder="Brief description for product listing..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="productLongDescription">Detailed Description *</label>
+                        <textarea id="productLongDescription" required placeholder="Detailed product information for product detail page..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Product Icon *</label>
+                        <div class="icon-selector">
+                            <div class="icon-option" data-icon="📱">📱</div>
+                            <div class="icon-option" data-icon="💻">💻</div>
+                            <div class="icon-option" data-icon="🎧">🎧</div>
+                            <div class="icon-option" data-icon="⌚">⌚</div>
+                            <div class="icon-option" data-icon="👕">👕</div>
+                            <div class="icon-option" data-icon="👟">👟</div>
+                            <div class="icon-option" data-icon="🧥">🧥</div>
+                            <div class="icon-option" data-icon="📚">📚</div>
+                            <div class="icon-option" data-icon="📖">📖</div>
+                            <div class="icon-option" data-icon="🎾">🎾</div>
+                            <div class="icon-option" data-icon="🧘">🧘</div>
+                            <div class="icon-option" data-icon="👨‍🍳">👨‍🍳</div>
+                        </div>
+                        <input type="hidden" id="selectedIcon" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Product Features</label>
+                        <div class="features-input">
+                            <input type="text" id="featureInput" placeholder="Enter a feature">
+                            <button type="button" class="add-feature-btn" onclick="addFeature()">Add Feature</button>
+                        </div>
+                        <div id="featuresDisplay"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Add Product to Store
+                </button>
+            </form>
+        </div>
+
+        <!-- Products List -->
+        <div id="productsList" class="products-list hidden">
+            <h2 class="form-title">Manage Products</h2>
+            <div id="productsGrid" class="products-grid">
+                <div class="loading">Loading products...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">Total: $0.00</div>
+            <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Shaswata's Store. All rights reserved. | Made for Educational Purpose</p>
+        </div>
+    </footer>
+
+    <script src="api-client.js"></script>
+    <script src="cart.js"></script>
+    <script>
+        let features = [];
+        let allProducts = [];
+
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            loadDashboardStats();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Icon selection
+            document.querySelectorAll('.icon-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('selectedIcon').value = this.dataset.icon;
+                });
+            });
+
+            // Form submission
+            document.getElementById('productForm').addEventListener('submit', handleFormSubmit);
+
+            // Feature input enter key
+            document.getElementById('featureInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addFeature();
+                }
+            });
+        }
+
+        function showAddProductForm() {
+            document.getElementById('addProductForm').classList.remove('hidden');
+            document.getElementById('productsList').classList.add('hidden');
+            hideMessages();
+        }
+
+        function showProductsList() {
+            document.getElementById('productsList').classList.remove('hidden');
+            document.getElementById('addProductForm').classList.add('hidden');
+            hideMessages();
+            loadProducts();
+        }
+
+        function hideMessages() {
+            document.getElementById('successMessage').classList.add('hidden');
+            document.getElementById('errorMessage').classList.add('hidden');
+        }
+
+        function showMessage(message, type = 'success') {
+            hideMessages();
+            const messageElement = document.getElementById(type + 'Message');
+            messageElement.textContent = message;
+            messageElement.classList.remove('hidden');
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                messageElement.classList.add('hidden');
+            }, 5000);
+        }
+
+        function addFeature() {
+            const input = document.getElementById('featureInput');
+            const feature = input.value.trim();
+            
+            if (feature && !features.includes(feature)) {
+                features.push(feature);
+                input.value = '';
+                updateFeaturesDisplay();
+            }
+        }
+
+        function removeFeature(index) {
+            features.splice(index, 1);
+            updateFeaturesDisplay();
+        }
+
+        function updateFeaturesDisplay() {
+            const display = document.getElementById('featuresDisplay');
+            display.innerHTML = features.map((feature, index) => 
+                `<span class="feature-tag">
+                    ${feature}
+                    <button type="button" class="remove-feature" onclick="removeFeature(${index})">×</button>
+                </span>`
+            ).join('');
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Adding Product...';
+
+            try {
+                const formData = {
+                    name: document.getElementById('productName').value,
+                    price: parseFloat(document.getElementById('productPrice').value),
+                    category: document.getElementById('productCategory').value,
+                    stock: parseInt(document.getElementById('productStock').value),
+                    description: document.getElementById('productDescription').value,
+                    longDescription: document.getElementById('productLongDescription').value,
+                    icon: document.getElementById('selectedIcon').value,
+                    features: features.length > 0 ? features : ['High Quality', 'Premium Product']
+                };
+
+                // Validate required fields
+                if (!formData.icon) {
+                    throw new Error('Please select an icon for the product');
+                }
+
+                // Add product via API
+                const response = await apiClient.createProduct(formData);
+                
+                showMessage('Product added successfully!', 'success');
+                
+                // Reset form
+                document.getElementById('productForm').reset();
+                features = [];
+                updateFeaturesDisplay();
+                document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Update stats
+                loadDashboardStats();
+
+            } catch (error) {
+                console.error('Error adding product:', error);
+                showMessage('Failed to add product: ' + error.message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Add Product to Store';
+            }
+        }
+
+        async function loadProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '<div class="loading">Loading products...</div>';
+
+            try {
+                const products = await getProducts();
+                allProducts = products;
+                
+                if (products.length === 0) {
+                    grid.innerHTML = '<div class="loading">No products found. Add some products to get started!</div>';
+                    return;
+                }
+
+                grid.innerHTML = products.map(product => `
+                    <div class="product-admin-card">
+                        <div class="product-icon">${product.icon}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">$${product.price}</div>
+                        <div style="color: #666; margin-bottom: 1rem;">
+                            Category: ${product.category}<br>
+                            Stock: ${product.stock || 'N/A'}
+                        </div>
+                        <div class="product-actions">
+                            <button class="edit-btn" onclick="editProduct(${product.id})">Edit</button>
+                            <button class="delete-btn" onclick="deleteProduct(${product.id})">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading products:', error);
+                grid.innerHTML = '<div class="loading">Error loading products. Please try again.</div>';
+            }
+        }
+
+        async function loadDashboardStats() {
+            try {
+                const products = await getProducts();
+                const categories = [...new Set(products.map(p => p.category))];
+                
+                document.getElementById('totalProducts').textContent = products.length;
+                document.getElementById('totalCategories').textContent = categories.length;
+                
+                // For demo purposes - in real app, these would come from order API
+                document.getElementById('totalOrders').textContent = Math.floor(Math.random() * 10);
+                document.getElementById('totalRevenue').textContent = '$' + (Math.random() * 1000).toFixed(2);
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        function editProduct(id) {
+            const product = allProducts.find(p => p.id === id);
+            if (product) {
+                // Fill form with existing product data
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productCategory').value = product.category;
+                document.getElementById('productStock').value = product.stock || 0;
+                document.getElementById('productDescription').value = product.description;
+                document.getElementById('productLongDescription').value = product.longDescription || product.description;
+                document.getElementById('selectedIcon').value = product.icon;
+                
+                // Select icon
+                document.querySelectorAll('.icon-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                    if (opt.dataset.icon === product.icon) {
+                        opt.classList.add('selected');
+                    }
+                });
+                
+                // Set features
+                features = product.features || [];
+                updateFeaturesDisplay();
+                
+                // Show form
+                showAddProductForm();
+                
+                // Change button text
+                document.getElementById('submitBtn').textContent = 'Update Product';
+                
+                showMessage('Product loaded for editing. Make changes and click Update.', 'success');
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                showMessage('Product deletion would be implemented here. This is a demo.', 'error');
+                // In real implementation:
+                // await apiClient.deleteProduct(id);
+                // loadProducts();
+            }
+        }
+    </script>
+</body>
+</html>

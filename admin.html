@@ -633,16 +633,15 @@
                 });
             }
 
-            // Add click handlers for admin cards
-            const addProductCard = document.querySelector('.admin-card button[onclick="showAddProductForm()"]');
-            const manageProductsCard = document.querySelector('.admin-card button[onclick="showProductsList()"]');
-            
-            if (addProductCard) {
-                addProductCard.onclick = showAddProductForm;
-            }
-            if (manageProductsCard) {
-                manageProductsCard.onclick = showProductsList;
-            }
+            // Attach event listeners to admin panel buttons by ID
+            const addProductBtn = document.getElementById('addProductBtn');
+            if (addProductBtn) addProductBtn.onclick = showAddProductForm;
+            const manageProductsBtn = document.getElementById('manageProductsBtn');
+            if (manageProductsBtn) manageProductsBtn.onclick = showProductsList;
+            const testApiBtn = document.getElementById('testApiBtn');
+            if (testApiBtn) testApiBtn.onclick = testApiFunction;
+            const debugToolBtn = document.getElementById('debugToolBtn');
+            if (debugToolBtn) debugToolBtn.onclick = debugToolFunction;
 
             console.log('All event listeners set up');
         }
@@ -855,6 +854,16 @@
                 // await apiClient.deleteProduct(id);
                 // loadProducts();
             }
+        }
+
+        // Placeholder for Test API button
+        function testApiFunction() {
+            alert('Test API button clicked! Implement API testing logic here.');
+        }
+
+        // Placeholder for Debug Tool button
+        function debugToolFunction() {
+            alert('Debug Tool button clicked! Implement debug tool logic here.');
         }
     </script>
 </body>

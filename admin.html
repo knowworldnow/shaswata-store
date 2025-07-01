@@ -761,31 +761,6 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Add Product to Store';
             }
-        }) {
-                    throw new Error('Please select an icon for the product');
-                }
-
-                // Add product via API
-                const response = await apiClient.createProduct(formData);
-                
-                showMessage('Product added successfully!', 'success');
-                
-                // Reset form
-                document.getElementById('productForm').reset();
-                features = [];
-                updateFeaturesDisplay();
-                document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
-                
-                // Update stats
-                loadDashboardStats();
-
-            } catch (error) {
-                console.error('Error adding product:', error);
-                showMessage('Failed to add product: ' + error.message, 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Add Product to Store';
-            }
         }
 
         async function loadProducts() {

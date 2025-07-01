@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Shaswata's Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">🛒 Shaswata's Store</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <div class="cart-icon" onclick="toggleCart()">
+                        🛒 Cart
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="search-section">
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for products...">
+                <button onclick="searchProducts()">🔍</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="products">
+        <div class="container">
+            <h1 class="section-title">All Products</h1>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+                <button class="filter-btn" onclick="filterProducts('electronics')">Electronics</button>
+                <button class="filter-btn" onclick="filterProducts('clothing')">Clothing</button>
+                <button class="filter-btn" onclick="filterProducts('books')">Books</button>
+                <button class="filter-btn" onclick="filterProducts('sports')">Sports</button>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div id="cartItems">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-total" id="cartTotal">
+                Total: $0.00
+            </div>
+            <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Shaswata's Store. All rights reserved. | Made for Educational Purpose</p>
+        </div>
+    </footer>
+
+    <script src="api-client.js"></script>
+    <script src="products-data.js"></script>
+    <script src="cart.js"></script>
+    <script>
+        let currentFilter = 'all';
+        let currentProducts = products;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check for URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            const searchQuery = urlParams.get('search');
+
+            try {
+                let productsToShow;
+                
+                if (category) {
+                    currentFilter = category;
+                    updateActiveFilter();
+                    productsToShow = await getProducts({ category });
+                } else if (searchQuery) {
+                    document.getElementById('searchInput').value = searchQuery;
+                    productsToShow = await getProducts({ search: searchQuery });
+                } else {
+                    productsToShow = await getProducts();
+                }
+                
+                displayProducts(productsToShow);
+            } catch (error) {
+                console.error('Failed to load products:', error);
+                displayProducts([]); // Show empty state
+            }
+
+            updateCartCount();
+        });
+
+        // Display products
+        function displayProducts(productsToShow) {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = '';
+
+            if (productsToShow.length === 0) {
+                productGrid.innerHTML = '<div style="text-align: center; color: #666; padding: 2rem;">No products found.</div>';
+                return;
+            }
+
+            productsToShow.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <span style="font-size: 4rem;">${product.icon}</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">$${product.price}</div>
+                        <div class="product-description">${product.description}</div>
+                        <a href="product-detail.html?id=${product.id}" class="view-product">View Details</a>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+                productGrid.appendChild(productCard);
+            });
+        }
+
+        // Filter products by category
+        function filterProducts(category) {
+            currentFilter = category;
+            updateActiveFilter();
+
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(product => product.category === category);
+            
+            currentProducts = filteredProducts;
+            displayProducts(filteredProducts);
+
+            // Update URL without page reload
+            const newUrl = category === 'all' 
+                ? 'products.html' 
+                : `products.html?category=${category}`;
+            window.history.replaceState({}, '', newUrl);
+        }
+
+        // Update active filter button
+        function updateActiveFilter() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Find and activate the correct button
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                if ((currentFilter === 'all' && btn.textContent === 'All') ||
+                    btn.textContent.toLowerCase() === currentFilter) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Search products
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            
+            if (searchTerm === '') {
+                displayProducts(products);
+                currentProducts = products;
+                return;
+            }
+
+            const searchResults = searchProducts(searchTerm);
+            currentProducts = searchResults;
+            displayProducts(searchResults);
+
+            // Update URL
+            window.history.replaceState({}, '', `products.html?search=${encodeURIComponent(searchTerm)}`);
+
+            // Reset filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+        }
+
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchProducts();
+            }
+        });
+
+        // Clear search when input is cleared
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            if (e.target.value === '') {
+                displayProducts(products);
+                currentProducts = products;
+                window.history.replaceState({}, '', 'products.html');
+                
+                // Reset to "All" filter
+                currentFilter = 'all';
+                updateActiveFilter();
+            }
+        });
+    </script>
+</body>
+</html>

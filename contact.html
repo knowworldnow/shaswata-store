@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - TechStore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">🛒 TechStore</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <div class="cart-icon" onclick="toggleCart()">
+                        🛒 Cart
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-content">
+        <div class="container">
+            <h1>Contact Us</h1>
+            
+            <p>We'd love to hear from you! Whether you have questions about our products, need help with an order, or just want to share feedback, our team is here to help.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin: 3rem 0;">
+                <div>
+                    <h2 style="color: #333; margin-bottom: 2rem;">Get in Touch</h2>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.5rem; margin-right: 1rem;">📧</span>
+                            <div>
+                                <strong>Email:</strong><br>
+                                <a href="mailto:support@techstore.com" style="color: #667eea;">support@techstore.com</a>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.5rem; margin-right: 1rem;">📞</span>
+                            <div>
+                                <strong>Phone:</strong><br>
+                                <a href="tel:+1-555-123-4567" style="color: #667eea;">+1 (555) 123-4567</a>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.5rem; margin-right: 1rem;">📍</span>
+                            <div>
+                                <strong>Address:</strong><br>
+                                123 Tech Street<br>
+                                Digital City, DC 12345<br>
+                                United States
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.5rem; margin-right: 1rem;">🕒</span>
+                            <div>
+                                <strong>Business Hours:</strong><br>
+                                Monday - Friday: 9:00 AM - 6:00 PM EST<br>
+                                Saturday: 10:00 AM - 4:00 PM EST<br>
+                                Sunday: Closed
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: #333; margin-bottom: 1rem;">Follow Us</h3>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" style="font-size: 2rem; text-decoration: none;">📘</a>
+                        <a href="#" style="font-size: 2rem; text-decoration: none;">🐦</a>
+                        <a href="#" style="font-size: 2rem; text-decoration: none;">📷</a>
+                        <a href="#" style="font-size: 2rem; text-decoration: none;">💼</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <form class="contact-form" id="contactForm">
+                        <h2 style="color: #333; margin-bottom: 1.5rem;">Send us a Message</h2>
+                        
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="order">Order Support</option>
+                                <option value="product">Product Question</option>
+                                <option value="shipping">Shipping & Returns</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="orderNumber">Order Number (if applicable)</label>
+                            <input type="text" id="orderNumber" name="orderNumber" placeholder="TS123456789">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Please provide details about your inquiry..."></textarea>
+                        </div>
+                        
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 3rem;">
+                <h2 style="color: #333; margin-bottom: 1rem;">Frequently Asked Questions</h2>
+                
+                <div style="display: grid; gap: 1.5rem;">
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">How can I track my order?</h4>
+                        <p style="color: #666;">Once your order is shipped, you'll receive an email with tracking information. You can use this to monitor your package's progress.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">What is your return policy?</h4>
+                        <p style="color: #666;">We offer a 30-day return policy for most items. Products must be in original condition with all packaging and accessories.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">Do you offer international shipping?</h4>
+                        <p style="color: #666;">Yes, we ship to most countries worldwide. Shipping costs and delivery times vary by location.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">How long does shipping take?</h4>
+                        <p style="color: #666;">Standard shipping typically takes 3-7 business days. Express shipping options are available for faster delivery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div id="cartItems">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-total" id="cartTotal">
+                Total: $0.00
+            </div>
+            <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TechStore. All rights reserved. | Made for Educational Purpose</p>
+        </div>
+    </footer>
+
+    <script src="products-data.js"></script>
+    <script src="cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            setupContactForm();
+        });
+
+        function setupContactForm() {
+            const form = document.getElementById('contactForm');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(form);
+                const contactData = {};
+                for (let [key, value] of formData.entries()) {
+                    contactData[key] = value;
+                }
+                
+                // Add timestamp
+                contactData.timestamp = new Date().toISOString();
+                contactData.messageId = 'MSG' + Date.now();
+                
+                // Show loading state
+                const button = form.querySelector('button[type="submit"]');
+                const originalText = button.textContent;
+                button.textContent = 'Sending...';
+                button.disabled = true;
+                
+                // Simulate sending message
+                setTimeout(() => {
+                    // Store message in localStorage (in real app, this would go to server)
+                    let messages = JSON.parse(localStorage.getItem('contactMessages')) || [];
+                    messages.push(contactData);
+                    localStorage.setItem('contactMessages', JSON.stringify(messages));
+                    
+                    // Show success message
+                    alert(`Thank you for your message!\n\nMessage ID: ${contactData.messageId}\n\nWe'll get back to you within 24 hours.`);
+                    
+                    // Reset form
+                    form.reset();
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - TechStore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">🛒 TechStore</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <div class="cart-icon" onclick="toggleCart()">
+                        🛒 Cart
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-content">
+        <div class="container">
+            <h1>About TechStore</h1>
+            
+            <p>Welcome to TechStore, your premier destination for cutting-edge technology, quality products, and exceptional customer service. Founded with a passion for innovation and a commitment to excellence, we have been serving customers worldwide since our establishment.</p>
+            
+            <p>At TechStore, we believe that technology should enhance your life, not complicate it. That's why we carefully curate our product selection to include only the highest quality items from trusted brands and manufacturers. Whether you're looking for the latest electronics, comfortable clothing, educational books, or sports equipment, we have something for everyone.</p>
+            
+            <h2 style="margin-top: 3rem; margin-bottom: 1.5rem; color: #333;">Our Mission</h2>
+            <p>Our mission is simple: to provide our customers with access to the best products at competitive prices, backed by outstanding customer service and fast, reliable shipping. We strive to make online shopping a pleasant and secure experience for all our customers.</p>
+            
+            <h2 style="margin-top: 3rem; margin-bottom: 1.5rem; color: #333;">Why Choose TechStore?</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
+                    <h3 style="color: #333; margin-bottom: 1rem;">Secure Shopping</h3>
+                    <p style="color: #666;">Your security is our priority. We use industry-standard encryption to protect your personal information and payment details.</p>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚚</div>
+                    <h3 style="color: #333; margin-bottom: 1rem;">Fast Shipping</h3>
+                    <p style="color: #666;">We offer fast and reliable shipping options to get your products to you as quickly as possible.</p>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💎</div>
+                    <h3 style="color: #333; margin-bottom: 1rem;">Quality Products</h3>
+                    <p style="color: #666;">We carefully select each product to ensure it meets our high standards for quality and reliability.</p>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h3 style="color: #333; margin-bottom: 1rem;">Customer Support</h3>
+                    <p style="color: #666;">Our dedicated customer support team is here to help you with any questions or concerns you may have.</p>
+                </div>
+            </div>
+            
+            <h2 style="margin-top: 3rem; margin-bottom: 1.5rem; color: #333;">Our Story</h2>
+            <p>TechStore was born from a simple idea: to create an online marketplace that combines the convenience of e-commerce with the personal touch of a local store. Our founders, passionate about technology and customer service, recognized the need for a platform that prioritizes both product quality and customer satisfaction.</p>
+            
+            <p>Since our launch, we have grown from a small startup to a trusted name in online retail, serving thousands of satisfied customers across the globe. Our success is built on the foundation of trust, quality, and innovation that continues to drive us forward.</p>
+            
+            <h2 style="margin-top: 3rem; margin-bottom: 1.5rem; color: #333;">Looking Forward</h2>
+            <p>As we continue to grow, we remain committed to our core values of excellence, innovation, and customer satisfaction. We are constantly expanding our product range, improving our services, and exploring new ways to enhance your shopping experience.</p>
+            
+            <p>Thank you for choosing TechStore. We look forward to serving you and being part of your journey toward finding the perfect products for your needs.</p>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="products.html" class="cta-button">Shop Now</a>
+                <a href="contact.html" class="cta-button" style="margin-left: 1rem; background: #667eea;">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div id="cartItems">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-total" id="cartTotal">
+                Total: $0.00
+            </div>
+            <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TechStore. All rights reserved. | Made for Educational Purpose</p>
+        </div>
+    </footer>
+
+    <script src="products-data.js"></script>
+    <script src="cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

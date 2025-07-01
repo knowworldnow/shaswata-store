@@ -1,0 +1,17 @@
+{
+    "name": "shaswatas-store",
+    "version": "1.0.0",
+    "description": "E-commerce website for educational purposes",
+    "scripts": {
+      "start": "python -m http.server 8000"
+    },
+    "keywords": [
+      "ecommerce",
+      "html",
+      "css",
+      "javascript",
+      "educational"
+    ],
+    "author": "Shaswata",
+    "license": "MIT"
+  }

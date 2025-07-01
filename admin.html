@@ -407,7 +407,7 @@
         <div class="admin-header">
             <h1>🔧 Admin Dashboard</h1>
             <p>Manage your store products and view analytics</p>
-            <button onclick="refreshData()" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; margin-top: 1rem;">
+            <button id="refreshBtn" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; margin-top: 1rem;">
                 🔄 Refresh Data
             </button>
         </div>
@@ -436,28 +436,28 @@
                 <div class="card-icon">➕</div>
                 <div class="card-title">Add New Product</div>
                 <div class="card-description">Create a new product listing with details, pricing, and images</div>
-                <button class="card-action" onclick="showAddProductForm()">Add Product</button>
+                <button class="card-action" id="addProductBtn">Add Product</button>
             </div>
             
             <div class="admin-card">
                 <div class="card-icon">📦</div>
                 <div class="card-title">Manage Products</div>
                 <div class="card-description">View, edit, and delete existing products in your store</div>
-                <button class="card-action" onclick="showProductsList()">View Products</button>
+                <button class="card-action" id="manageProductsBtn">View Products</button>
             </div>
             
             <div class="admin-card">
                 <div class="card-icon">🧪</div>
                 <div class="card-title">Test API</div>
                 <div class="card-description">Test if the backend APIs are working correctly</div>
-                <button class="card-action" onclick="testAPI()">Test APIs</button>
+                <button class="card-action" id="testApiBtn">Test APIs</button>
             </div>
             
             <div class="admin-card">
                 <div class="card-icon">🔍</div>
                 <div class="card-title">Debug Tool</div>
                 <div class="card-description">Advanced debugging and API testing interface</div>
-                <button class="card-action" onclick="window.open('/debug.html', '_blank')">Open Debug Tool</button>
+                <button class="card-action" id="debugToolBtn">Open Debug Tool</button>
             </div>
         </div>
 
@@ -529,7 +529,7 @@
                         <label>Product Features</label>
                         <div class="features-input">
                             <input type="text" id="featureInput" placeholder="Enter a feature">
-                            <button type="button" class="add-feature-btn" onclick="addFeature()">Add Feature</button>
+                            <button type="button" class="add-feature-btn" id="addFeatureBtn">Add Feature</button>
                         </div>
                         <div id="featuresDisplay"></div>
                     </div>
@@ -698,9 +698,17 @@
             display.innerHTML = features.map((feature, index) => 
                 `<span class="feature-tag">
                     ${feature}
-                    <button type="button" class="remove-feature" onclick="removeFeature(${index})">×</button>
+                    <button type="button" class="remove-feature" data-index="${index}">×</button>
                 </span>`
             ).join('');
+
+            // Add event listeners to remove buttons
+            display.querySelectorAll('.remove-feature').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    removeFeature(index);
+                });
+            });
         }
 
         async function handleFormSubmit(e) {
